@@ -1,5 +1,5 @@
 import Staff from "../models/StaffModel.js";
-import AppDataSource from "../ConfigConnection.js";
+import AppDataSource from "../config/ConfigConnection.js";
 
 const staffResponsitory = AppDataSource.getRepository(Staff);
 
@@ -28,8 +28,10 @@ export const deleteStaff = async (staffId) => {
     return await staffResponsitory.delete({ id: staffId });
 };
 
-export const getListStaff = async () => {
+export const getListStaff = async (page,limit) => {
     return await staffResponsitory.find({
+        skip: (page-1)*limit,
+        take: limit,
         relations: {
             department: true,
         },

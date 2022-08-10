@@ -1,5 +1,5 @@
 import express from "express";
-import AccountRouter from "./AccountRoute";
+import AccountRouter from "./AccountRoute.js";
 import CompanyRouter from "./CompanyRoute.js";
 import DepartmentRouter from "./DepartmentRoute.js";
 import InventoryRouter from "./InventoryRoute.js";

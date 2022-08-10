@@ -24,8 +24,10 @@ export const getInventory = async (inventoryId) => {
 export const deleteInventory = async (inventoryId) => {
   return await inventoryResponsitory.delete({ id: inventoryId });
 };
-export const getListInventory = async () => {
+export const getListInventory = async (page, limit) => {
   return await inventoryResponsitory.find({
+    skip: (page - 1) * limit,
+    take: limit,
     relations: {
       company: true,
     },

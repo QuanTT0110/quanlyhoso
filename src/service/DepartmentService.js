@@ -5,7 +5,7 @@ const departmentResponsitory = AppDataSource.getRepository(Department);
 
 export const createDepartment = async (department, company) => {
     return await departmentResponsitory.save(
-        departmentResponsitory.create({...department,company})
+        departmentResponsitory.create({ ...department, company })
     );
 };
 
@@ -28,9 +28,11 @@ export const deleteDepartment = async (departmentId) => {
     return await departmentResponsitory.delete({ id: departmentId });
 };
 
-export const getListDepartment = async () => {
+export const getListDepartment = async (page, limit) => {
     return await departmentResponsitory.find({
         relations: {
+            skip: (page - 1) * limit,
+            take: limit,
             company: true,
         },
     });

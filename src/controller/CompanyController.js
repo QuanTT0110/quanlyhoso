@@ -5,6 +5,7 @@ import {
     getListCompany,
 } from "../service/CompanyService.js";
 import { getType } from "../service/TypeService.js";
+
 const companyController = {
     create: async (req, res, next) => {
         try {

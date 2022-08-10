@@ -28,8 +28,10 @@ export const deleteCompany = async (companyId) => {
     return await companyResponsitory.delete({ id: companyId });
 };
 
-export const getListCompany = async () => {
+export const getListCompany = async (page,limit) => {
     return await companyResponsitory.find({
+        skip: (page-1)*limit,
+        take: limit,
         relations: {
             type: true,
         },

@@ -28,8 +28,10 @@ export const deleteDrawer = async (drawerId) => {
     return await drawerResponsitory.delete({ id: drawerId });
 };
 
-export const getListDrawer = async () => {
+export const getListDrawer = async (page,limit) => {
     return await drawerResponsitory.find({
+        skip: (page-1)*limit,
+        take: limit,
         relations: {
             cabinet: true,
         },

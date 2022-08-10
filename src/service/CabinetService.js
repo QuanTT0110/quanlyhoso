@@ -28,8 +28,10 @@ export const deleteCabinet = async (cabinetId) => {
     return await cabinetResponsitory.delete({ id: cabinetId });
 };
 
-export const getListCabinet = async () => {
+export const getListCabinet = async (page,limit) => {
     return await cabinetResponsitory.find({
+        skip: (page-1)*limit,
+        take: limit,
         relations: {
             inventory: true,
         },

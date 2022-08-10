@@ -46,12 +46,11 @@ const staffController = {
 
     register: async (req, res, next) => {
         try {
-            const { name, email, password, isRoot, active } = req.body;
-            const existedStaff = await getStaffByEmail({ email });
+            const { name, phone, address, age, gender, email, password, isRoot, active } = req.body;
+            console.log(req.body);
+            const existedStaff = await getStaffByEmail( email );
             if (existedStaff) {
-                const error = new Error("Account already exists");
-                error.statusCode = 409;
-                return next(error);
+                return res.status(403).send("Account is already existed");
             }
             const hashPw = await bcrypt.hash(password, 10);
             const newStaff = await createStaff({
@@ -60,6 +59,10 @@ const staffController = {
                 password: hashPw,
                 isRoot: isRoot,
                 active: active,
+                phone: phone,
+                address: address,
+                age: age,
+                gender: gender,
             });
             await saveStaff(newStaff);
             res.status(200).json("Register success");
@@ -69,9 +72,9 @@ const staffController = {
         }
     },
 
-    getListStaff: async(req, res, next)=>{
+    getListStaff: async (req, res, next) => {
         try {
-            const result = await getListStaff();
+            const result = await getListStaff(req.query.page,req.query.limit);
             return res.status(200).json({ msg: "Get list of staff successfully", data: result });
         } catch (error) {
             console.log(error);
@@ -79,7 +82,7 @@ const staffController = {
         }
     },
 
-    getStaff: async(req, res, next) => {
+    getStaff: async (req, res, next) => {
         try {
             const staffId = req.params.id;
             const result = await getStaff(staffId);
